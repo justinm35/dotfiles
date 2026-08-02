@@ -1,0 +1,7 @@
+# lazynotion configuration
+# (your token comes from $NOTION_TOKEN; you can also put it here as
+#  token = "ntn_..." or per-workspace under [workspaces.name])
+
+# sidebar shows only workspace-level pages; nested pages are reached by
+# navigating into their parents, or via / search (which finds everything)
+root_pages_only = true

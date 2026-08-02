@@ -1,0 +1,13 @@
+git:
+  pagers:
+    - colorArg: always
+    - pager: delta --dark --paging=never
+
+gui:
+  showFileTree: false
+
+os:
+  editInTerminal: false
+  open: 'sock=/tmp/nvim-$(basename "$PWD"); if [ -S "$sock" ]; then nvr --servername "$sock" --remote {{filename}}; else echo "[lazygit] no nvim server at $sock" >&2; exit 1; fi'
+  edit: 'sock=/tmp/nvim-$(basename "$PWD"); if [ -S "$sock" ]; then nvr --servername "$sock" --remote {{filename}}; else echo "[lazygit] no nvim server at $sock" >&2; exit 1; fi'
+  editAtLine: 'sock=/tmp/nvim-$(basename "$PWD"); if [ -S "$sock" ]; then nvr --servername "$sock" +''{{line}}'' {{filename}}; else echo "[lazygit] no nvim server at $sock" >&2; exit 1; fi'

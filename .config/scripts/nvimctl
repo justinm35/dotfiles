@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+set -euo pipefail
+CACHE="$HOME/.cache/nvim"; META_DIR="$CACHE/meta"; PAYLOAD="$CACHE/walkthrough.json"
+
+WANT_DIR=""; WANT_PANE=""
+while [ "${1:-}" = "--dir" ] || [ "${1:-}" = "--pane" ]; do
+  case "$1" in
+    --dir)  WANT_DIR="$2";  shift 2 ;;
+    --pane) WANT_PANE="$2"; shift 2 ;;
+  esac
+done
+cmd="${1:-}"; shift || true
+
+rows() {
+  shopt -s nullglob
+  for f in "$META_DIR"/*.json; do
+    row="$(jq -r '[.focused // 0, .socket // "", .cwd // "", .pane // ""] | @tsv' "$f" 2>/dev/null)" || continue
+    sock="$(printf '%s' "$row" | cut -f2)"
+    if [ -S "$sock" ]; then printf '%s\n' "$row"; else rm -f "$f"; fi
+  done | sort -rn
+}
+
+filtered() {
+  if [ -n "${NVIM_WALK_SOCK:-}" ] && [ -S "${NVIM_WALK_SOCK}" ]; then
+    printf '0\t%s\t\t\n' "$NVIM_WALK_SOCK"; return
+  fi
+  r="$(rows)"
+  [ -n "$WANT_PANE" ] && r="$(printf '%s\n' "$r" | awk -F'\t' -v p="$WANT_PANE" 'NF&&$4==p')"
+  [ -n "$WANT_DIR" ]  && r="$(printf '%s\n' "$r" | awk -F'\t' -v d="$WANT_DIR" 'NF&&$3==d')"
+  printf '%s\n' "$r"
+}
+
+case "$cmd" in
+  which|list)
+    out="$(filtered | awk -F'\t' 'NF{printf "pane=%s  cwd=%s  sock=%s\n",($4==""?"-":$4),$3,$2}')"
+    [ -n "$out" ] && printf '%s\n' "$out" || { echo "no live nvim"; exit 1; } ;;
+  count)
+    filtered | awk -F'\t' 'NF' | wc -l | tr -d ' ' ;;
+  step)
+    sock="$(filtered | awk -F'\t' 'NF{print $2; exit}')"
+    [ -n "$sock" ] || { echo "no matching nvim" >&2; exit 1; }
+    printf '%s' "$1" > "$PAYLOAD"
+    nvim --server "$sock" --remote-expr 'execute("WalkStep")' >/dev/null ;;
+  clear)
+    filtered | awk -F'\t' 'NF{print $2}' | while read -r s; do
+      [ -S "$s" ] && nvim --server "$s" --remote-expr 'execute("WalkClear")' >/dev/null 2>&1 || true
+    done ;;
+  *) echo "usage: nvimctl [--dir D] [--pane %N] {which|count|step '<json>'|clear}" >&2; exit 2 ;;
+esac

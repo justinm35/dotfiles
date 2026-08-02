@@ -1,0 +1,51 @@
+# Safety net: never track secrets or machine state, even if copied in later.
+
+# Secret-bearing files
+.npmrc
+.netrc
+.env.secrets
+.boto
+.emulator_console_auth_token
+**/.credentials.json
+**/credentials
+**/credentials.json
+*.pem
+*.key
+id_rsa*
+id_ed25519*
+
+# Secret-bearing directories
+.ssh/
+.aws/
+.kube/
+.docker/
+.pulumi/
+.terraform.d/
+.mcp-auth/
+.mongodb/
+.faktory/
+.secrets/
+.config/gcloud/
+.config/gh/
+.config/op/
+.config/flyctl/
+.config/inngest/
+
+# Claude Code state (only settings/skills are tracked, explicitly)
+.claude/.credentials.json
+.claude/projects/
+.claude/sessions/
+.claude/history.jsonl
+.claude/cache/
+.claude/telemetry/
+.claude/shell-snapshots/
+.claude/plugins/
+.claude/worktrees/
+
+# History / caches / OS cruft
+.DS_Store
+.*_history
+.lesshst
+.viminfo
+.zcompdump*
+.zsh_sessions/

@@ -1,0 +1,5 @@
+[user]
+	email = justin.martin3501@gmail.com
+	name = Justin Martin
+[alias]
+	pr = !gh pr create --base main --head $(git branch --show-current) --title \"$(git log -1 --pretty=%s)\" --body \"\" --web

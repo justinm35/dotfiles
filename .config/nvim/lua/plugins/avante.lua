@@ -1,0 +1,89 @@
+return {}
+-- require("plugins.prompts.avante_system")
+-- return {
+--   "yetone/avante.nvim",
+--   event = "VeryLazy",
+--   version = false, -- Never set this value to "*"! Never!
+--   opts = {
+--     -- add any opts here
+--     -- for example
+--     -- provider = "openai",
+--     -- openai = {
+--     --   endpoint = "https://api.openai.com/v1",
+--     --   model = "gpt-4-turbo",        -- your desired model (or use gpt-4o, etc.)
+--     --   timeout = 30000,              -- Timeout in milliseconds, increase this for reasoning models
+--     --   temperature = 0,
+--     --   max_completion_tokens = 4096, -- must stay under this even on GPT-4 Turbo
+--     --   reasoning_effort = "medium",  -- low|medium|high, only used for reasoning models
+--     -- },
+--     provider = "claude",
+--     providers = {
+--       claude = {
+--         endpoint = "https://api.anthropic.com",
+--         model = "claude-sonnet-4-20250514",
+--         timeout = 30000, -- Timeout in milliseconds
+--         extra_request_body = {
+--           temperature = 0.75,
+--           max_tokens = 20480,
+--         },
+--       },
+--     },
+--     -- RAG service configuration should be inside opts, not at root level
+--     rag_service = {
+--       enabled = true,
+--       host_mount = vim.fn.getcwd(),
+--       provider = "openai",
+--       llm_model = "gpt-4-turbo",
+--       embed_model = "text-embedding-3-small",
+--       endpoint = "https://api.openai.com/v1",
+--       timeout = 30000,
+--       temperature = 0,
+--       api_key_name = "OPENAI_API_KEY",
+--     },
+--     windows = {
+--       position = "right",
+--       wrap = true,
+--       width = 40, -- Percentage of screen width
+--       sidebar_header = {
+--         enabled = true,
+--         align = "center",
+--         rounded = true,
+--       },
+--       input = {
+--         prefix = "> ",
+--         height = 8,
+--       },
+--       edit = {
+--         start_insert = true,
+--       },
+--       ask = {
+--         floating = false,
+--         start_insert = true,
+--         focus_on_apply = "ours",
+--       },
+--     },
+--     system_prompt = SYSTEM_PROMPT,
+--   },
+--   -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
+--   build = "make",
+--   -- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
+--   dependencies = {
+--     "nvim-treesitter/nvim-treesitter",
+--     "stevearc/dressing.nvim",
+--     "nvim-lua/plenary.nvim",
+--     "MunifTanjim/nui.nvim",
+--     --- The below dependencies are optional,
+--     "echasnovski/mini.pick",         -- for file_selector provider mini.pick
+--     "nvim-telescope/telescope.nvim", -- for file_selector provider telescope
+--     "hrsh7th/nvim-cmp",              -- autocompletion for avante commands and mentions
+--     "ibhagwan/fzf-lua",              -- for file_selector provider fzf
+--     {
+--       -- Make sure to set this up properly if you have lazy=true
+--       'MeanderingProgrammer/render-markdown.nvim',
+--       opts = {
+--         file_types = { "markdown", "Avante" },
+--       },
+--       ft = { "markdown", "Avante" },
+--     },
+--   },
+-- }
