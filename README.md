@@ -37,3 +37,14 @@ cd ~/dotfiles && ./install.sh
 
 `install.sh` symlinks each tracked file into `$HOME` (backing up anything already
 there to `*.bak`). Review it before running.
+
+## Shell restore notes
+
+`.zshrc` expects oh-my-zsh plus these custom plugins/themes:
+
+```bash
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+git clone https://github.com/zsh-users/zsh-syntax-highlighting ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+git clone https://github.com/jeffreytse/zsh-vi-mode ~/.oh-my-zsh/custom/plugins/zsh-vi-mode
+git clone https://github.com/romkatv/powerlevel10k ~/.oh-my-zsh/custom/themes/powerlevel10k
